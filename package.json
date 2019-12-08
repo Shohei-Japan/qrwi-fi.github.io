@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "nuxt": "^2.0.0",
-    "push-dir": "^0.4.1"
+    "push-dir": "^0.4.1",
+    "qrcode": "^1.4.4"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
