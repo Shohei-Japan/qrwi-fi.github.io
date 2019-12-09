@@ -8,7 +8,7 @@
       <v-form>
         <v-container>
           <v-row>
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="12">
               <v-text-field
                 v-model="formData.ssid"
                 :rules="rules.ssidRules"
@@ -42,9 +42,19 @@
       </p>
       <v-card-actions class="d-flex justify-space-around">
         <v-radio-group v-model="version" row>
-          <v-radio :value="versionsList[0]" label="S" />
-          <v-radio :value="versionsList[1]" label="M" />
-          <v-radio :value="versionsList[2]" label="L" />
+          <v-radio
+            :value="versionsList[0].value"
+            :label="versionsList[0].label"
+            selected
+          />
+          <v-radio
+            :value="versionsList[1].value"
+            :label="versionsList[1].label"
+          />
+          <v-radio
+            :value="versionsList[2].value"
+            :label="versionsList[2].label"
+          />
         </v-radio-group>
         <v-btn
           @click="createImage()"
@@ -79,31 +89,46 @@ export default {
     rules: {
       ssidRules: [
         (v) => !!v || 'SSID is required',
-        (v) => v.match(/^[0-9A-Za-z]+$/) || 'SSID must be half-width characters'
+        (v) =>
+          v.match(/^[-_0-9A-Za-z]+$/) || 'SSID must be half-width characters'
       ],
       keyRules: [
         (v) => !!v || 'KEY is required',
-        (v) => v.match(/^[0-9A-Za-z]+$/) || 'SSID must be half-width characters'
+        (v) =>
+          v.match(/^[-_0-9A-Za-z]+$/) || 'SSID must be half-width characters'
       ],
       encryptionRules: [(v) => !!v || 'Encryption is required']
     },
     canvasSize: {
-      height: 200,
-      width: 200
+      height: 300,
+      width: 300
     },
     logoSize: {
-      height: 50,
-      width: 50
+      height: 80,
+      width: 80
     },
     showErrorMessage: false,
-    version: null,
+    version: 5,
     errorCorrectionLevel: 'H',
     originalQRCode: '',
     uploadImageBlobUrl: ''
   }),
   computed: {
     versionsList() {
-      return [5, 8, 12]
+      return [
+        {
+          value: 6,
+          label: 'S'
+        },
+        {
+          value: 8,
+          label: 'M'
+        },
+        {
+          value: 12,
+          label: 'L'
+        }
+      ]
     },
     encryptionItems() {
       return ['WPA/WPA2', 'WEP', 'None']
@@ -177,8 +202,8 @@ export default {
       logoImage.onload = () => {
         ctx.drawImage(
           logoImage,
-          75,
-          75,
+          110,
+          110,
           this.logoSize.width,
           this.logoSize.height
         )
