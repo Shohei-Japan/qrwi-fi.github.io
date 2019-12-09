@@ -29,8 +29,8 @@
               />
               <v-file-input
                 @change="uploadImage"
-                label="Image upload"
                 :clearable="false"
+                label="Image upload"
                 accept="image/jpeg,image/png"
               />
             </v-col>
@@ -42,9 +42,9 @@
       </p>
       <v-card-actions class="d-flex justify-space-around">
         <v-radio-group v-model="version" row>
-          <v-radio label="S" :value="versionsList[0]" />
-          <v-radio label="M" :value="versionsList[1]" />
-          <v-radio label="L" :value="versionsList[2]" />
+          <v-radio :value="versionsList[0]" label="S" />
+          <v-radio :value="versionsList[1]" label="M" />
+          <v-radio :value="versionsList[2]" label="L" />
         </v-radio-group>
         <v-btn
           @click="createImage()"
@@ -148,7 +148,9 @@ export default {
           this.originalQRCode = url
         })
         .catch((err) => {
+          /* eslint-disable no-console */
           console.error(err)
+          /* eslint-enable no-console */
         })
       this.draw()
     },
@@ -186,20 +188,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.qrcode__container {
-  position: relative;
-  width: 180px;
-  height: 180px;
-}
-
-.roxx {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  z-index: 1;
-}
-</style>
+<style lang="scss"></style>
