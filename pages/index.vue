@@ -129,22 +129,6 @@ export default {
         .catch((err) => {
           console.error(err)
         })
-      // await QRCode.toCanvas(
-      //   string,
-      //   {
-      //     errorCorrectionLevel: this.errorCorrectionLevel,
-      //     version: this.version
-      //   },
-      //   (err, canvas) => {
-      //     if (err) {
-      //       console.error(err)
-      //     }
-      //     canvas.className = 'qrcode__canvas'
-      //     this.qrCodeCanvas = canvas
-      //     const container = document.querySelector('.qrcode__container')
-      //     container.appendChild(canvas)
-      //   }
-      // )
       this.draw()
     },
     draw() {
