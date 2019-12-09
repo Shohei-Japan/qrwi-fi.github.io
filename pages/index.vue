@@ -30,6 +30,7 @@
               <v-file-input
                 @change="uploadImage"
                 label="Image upload"
+                :clearable="false"
                 accept="image/jpeg,image/png"
               />
             </v-col>
@@ -39,7 +40,12 @@
       <p v-if="showErrorMessage" class="text-center">
         Woops, all forms must be filled.
       </p>
-      <v-card-actions class="d-flex align-end flex-column">
+      <v-card-actions class="d-flex justify-space-around">
+        <v-radio-group v-model="version" row>
+          <v-radio label="S" :value="versionsList[0]" />
+          <v-radio label="M" :value="versionsList[1]" />
+          <v-radio label="L" :value="versionsList[2]" />
+        </v-radio-group>
         <v-btn
           @click="createImage()"
           class="text-right"
@@ -71,8 +77,14 @@ export default {
       key: ''
     },
     rules: {
-      ssidRules: [(v) => !!v || 'SSID is required'],
-      keyRules: [(v) => !!v || 'KEY is required'],
+      ssidRules: [
+        (v) => !!v || 'SSID is required',
+        (v) => v.match(/^[0-9A-Za-z]+$/) || 'SSID must be half-width characters'
+      ],
+      keyRules: [
+        (v) => !!v || 'KEY is required',
+        (v) => v.match(/^[0-9A-Za-z]+$/) || 'SSID must be half-width characters'
+      ],
       encryptionRules: [(v) => !!v || 'Encryption is required']
     },
     canvasSize: {
@@ -80,16 +92,19 @@ export default {
       width: 200
     },
     logoSize: {
-      height: 40,
-      width: 40
+      height: 50,
+      width: 50
     },
     showErrorMessage: false,
-    version: 5,
+    version: null,
     errorCorrectionLevel: 'H',
     originalQRCode: '',
     uploadImageBlobUrl: ''
   }),
   computed: {
+    versionsList() {
+      return [5, 8, 12]
+    },
     encryptionItems() {
       return ['WPA/WPA2', 'WEP', 'None']
     },
@@ -105,6 +120,9 @@ export default {
      * アップロードした画像ファイルの blobUrl を取得する
      */
     uploadImage(value) {
+      if (!value) {
+        return
+      }
       this.uploadImageBlobUrl = window.URL.createObjectURL(value)
     },
     /**
@@ -122,7 +140,10 @@ export default {
      * QR コードを生成する
      */
     async generateQR() {
-      await QRCode.toDataURL(this.wifiString)
+      await QRCode.toDataURL(this.wifiString, {
+        version: this.version,
+        errorCorrectionLevel: this.errorCorrectionLevel
+      })
         .then((url) => {
           this.originalQRCode = url
         })
@@ -137,6 +158,7 @@ export default {
         return
       }
       const ctx = canvas.getContext('2d')
+      ctx.imageSmoothingQuality = 'high'
       const qrCodeImage = new Image()
       qrCodeImage.src = this.originalQRCode
       qrCodeImage.onload = () => {
@@ -153,8 +175,8 @@ export default {
       logoImage.onload = () => {
         ctx.drawImage(
           logoImage,
-          80,
-          80,
+          75,
+          75,
           this.logoSize.width,
           this.logoSize.height
         )
