@@ -27,6 +27,11 @@
                 label="KEY"
                 required
               />
+              <v-file-input
+                @change="uploadImage"
+                label="Image upload"
+                accept="image/jpeg,image/png"
+              />
             </v-col>
           </v-row>
         </v-container>
@@ -44,13 +49,6 @@
           Get QRCode
         </v-btn>
       </v-card-actions>
-      <input
-        id="ufile"
-        @change="uploadImage"
-        name="ufile"
-        type="file"
-        accept="image/jpeg,image/png"
-      /><br />
       <div class="text-center">
         <canvas
           id="qrcode__canvas"
@@ -107,9 +105,7 @@ export default {
      * アップロードした画像ファイルの blobUrl を取得する
      */
     uploadImage(value) {
-      this.image = value
-      const file = this.image.target.files[0]
-      this.uploadImageBlobUrl = window.URL.createObjectURL(file)
+      this.uploadImageBlobUrl = window.URL.createObjectURL(value)
     },
     /**
      * フォームがすべて入力されているとき、 QR コードを生成できる
@@ -118,6 +114,7 @@ export default {
       this.showErrorMessage = false
       if (!this.existEmptyForm) {
         this.showErrorMessage = true
+        return
       }
       this.generateQR()
     },
