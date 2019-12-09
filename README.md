@@ -1,22 +1,21 @@
 # qrwi-fi
 
-> My great Nuxt.js project
+https://qrwi-fi.netlify.com/
 
-## Build Setup
+wi-fi の SSID と KEY の情報を持った QR コードに、任意の画像を重ねることができます。
+企業ロゴを入れて、オフィスのゲスト用に使用したり、勉強会の会場用 wi-fi をお知らせするなどご利用ください。
 
-``` bash
-# install dependencies
-$ yarn install
+## 利用
 
-# serve with hot reload at localhost:3000
-$ yarn dev
+### QR コードの生成
 
-# build for production and launch server
-$ yarn build
-$ yarn start
+1. SSID 、 Encryption 、KEY を入力します。
+1. 画像を選択してアップロードします。
+1. S, M, L で QR コードの複雑さを指定できます。
+1. GET QRCODE をクリックすると QR コードを生成します。
+1. 生成した QR コードは右クリックで PNG 画像として保存できます。
 
-# generate static project
-$ yarn generate
-```
+### コードの利用方法
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+- QR コード読み取りアプリで QR コードを読み込む
+- スマートフォンの wi-fi 接続設定画面からネットワークを追加を選択し、 QR コードで読み込む
