@@ -5,6 +5,11 @@ https://qrwi-fi.netlify.com/
 wi-fi の SSID と KEY の情報を持った QR コードに、任意の画像を重ねることができます。
 企業ロゴを入れて、オフィスのゲスト用に使用したり、勉強会の会場用 wi-fi をお知らせするなどご利用ください。
 
+
+## 作成した背景
+
+https://qiita.com/Shohei-Japan/items/ec3650a44a02fbeeaeea
+
 ## 利用
 
 ### QR コードの生成
